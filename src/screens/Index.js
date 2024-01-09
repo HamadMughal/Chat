@@ -1,2 +1,4 @@
 import Splash from './splash/Splash';
-export {Splash};
+import Conversations from './chat/Conversations';
+import Chat from './chat/Chat';
+export {Splash, Conversations, Chat};

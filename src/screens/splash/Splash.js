@@ -1,12 +1,19 @@
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Colors} from '../../constents/colors';
-import Header from '../../components/Header';
 
-const Splash = () => {
+const Splash = ({navigation}) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'conversation'}],
+      });
+    }, 3000);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
       <Text style={styles.text}>
         <Text style={styles.chatText}>Chat</Text> Room
       </Text>

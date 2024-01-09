@@ -1,32 +1,59 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
 import {Colors} from '../constents/colors';
 import {ImageSet} from '../constents/Images';
 
-const Header = () => {
+const Header = props => {
+  const {centeralText, profilePic, name, navigation} = props;
+  const onPressBack = () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.header}>
-      <View style={styles.profileView}>
-        <Image source={ImageSet.backArrow} style={styles.backArrowStyle} />
-        <Image
-          source={ImageSet.userDummyProfile}
-          style={styles.profileImageStyle}
-        />
-        <Text style={styles.nameText} numberOfLines={1}>
-          Hamad Amin
-        </Text>
-      </View>
+      {centeralText ? (
+        <Text style={styles.HeaderText}>{centeralText}</Text>
+      ) : (
+        <>
+          <View style={styles.profileView}>
+            <TouchableOpacity style={styles.backButton} onPress={onPressBack}>
+              <Image
+                source={ImageSet.backArrow}
+                style={styles.backArrowStyle}
+              />
+              <Image
+                source={profilePic ? profilePic : ImageSet.userDummyProfile}
+                style={styles.profileImageStyle}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.nameView}>
+              <Text style={styles.nameText} numberOfLines={1}>
+                {name}
+              </Text>
+              <Text style={styles.seenText} numberOfLines={1}>
+                Last Seen today at 12:00 PM
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.actionView}>
-        <Image source={ImageSet.video} style={styles.actionIconStyle} />
-        <Image source={ImageSet.call} style={styles.actionIconStyle} />
-        <Image source={ImageSet.more} style={styles.actionIconStyle} />
-      </View>
-      <Text style={styles.HeaderText}>Chat Room</Text>
+          <View style={styles.actionView}>
+            <TouchableOpacity style={styles.actionButton}>
+              <Image source={ImageSet.video} style={styles.actionIconStyle} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton}>
+              <Image source={ImageSet.call} style={styles.actionIconStyle} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton}>
+              <Image source={ImageSet.more} style={styles.actionIconStyle} />
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </View>
   );
 };
-
+// Header.defaultProps = {
+//   centeralText: 'Chat Room',
+// };
 export default Header;
 
 const styles = StyleSheet.create({
@@ -41,17 +68,19 @@ const styles = StyleSheet.create({
   },
   profileView: {
     flexDirection: 'row',
-    backgroundColor: 'pink',
     padding: 3,
     position: 'absolute',
     left: 5,
     alignItems: 'center',
     width: '63%',
   },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   actionView: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'pink',
     padding: 3,
     position: 'absolute',
     right: 5,
@@ -59,27 +88,37 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '35%',
   },
+  actionButton: {
+    padding: 5,
+    borderRadius: 20,
+  },
+
   profileImageStyle: {
     height: 35,
     width: 35,
-    tintColor: Colors.white,
     borderWidth: 2,
     borderRadius: 25,
     borderColor: Colors.white,
     resizeMode: 'contain',
     marginLeft: 5,
   },
-  nameText: {
+  nameView: {
     flex: 1,
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  nameText: {
     color: Colors.white,
     fontSize: 18,
-    marginLeft: 10,
+  },
+  seenText: {
+    color: Colors.white,
+    fontSize: 12,
   },
   HeaderText: {
     color: Colors.white,
     fontSize: 25,
     fontWeight: 'bold',
-    backgroundColor: 'red',
   },
   backArrowStyle: {
     height: 22,
