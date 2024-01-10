@@ -1,6 +1,7 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {Colors} from '../constents/colors';
+import moment from 'moment';
 
 const Message = props => {
   const {item} = props;
@@ -8,11 +9,11 @@ const Message = props => {
     <TouchableOpacity style={styles.messageContainer}>
       <View style={item.isMine ? styles.messageViewV2 : styles.messageView}>
         <Text style={item.isMine ? styles.messageTextV2 : styles.messageText}>
-          {item.message}
+          {item.text}
         </Text>
         <View style={styles.timeView}>
           <Text style={item.isMine ? styles.timeTextV2 : styles.timeText}>
-            {item.time}
+            {moment(item.createdAt).format('hh:mm')}
           </Text>
         </View>
       </View>

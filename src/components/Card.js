@@ -1,6 +1,8 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {Colors} from '../constents/colors';
+import {ImageSet} from '../constents/Images';
+import moment from 'moment';
 
 const Card = props => {
   const {item, goToChat} = props;
@@ -8,17 +10,22 @@ const Card = props => {
     <TouchableOpacity
       style={styles.mainContainer}
       onPress={() => goToChat(item)}>
-      <Image source={item.pic} style={styles.profilePicStyle} />
+      <Image
+        source={item.pic ? item.pic : ImageSet.userDummyProfile}
+        style={styles.profilePicStyle}
+      />
       <View style={styles.nameContainer}>
         <Text style={styles.nameText} numberOfLines={1}>
-          {item.name}
+          {item.username}
         </Text>
         <Text style={styles.messageText} numberOfLines={1}>
           {item.lastMessage}
         </Text>
       </View>
       <View style={styles.counterContainer}>
-        <Text style={styles.timeText}>{item.time}</Text>
+        <Text style={styles.timeText}>
+          {moment(item.timestamp).format('hh:mm')}
+        </Text>
         <View style={styles.counterView}>
           <Text style={styles.CounterText}>{'1'}</Text>
         </View>

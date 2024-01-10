@@ -1,33 +1,30 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../components/Header';
 import {ImageSet} from '../../constents/Images';
 import Card from '../../components/Card';
+import {getConversations} from '../../networking/chatServices';
 
 const Conversations = ({navigation}) => {
-  const data = [
-    {
-      id: 1,
-      name: 'Ali',
-      pic: ImageSet.userDummyProfile,
-      lastMessage: 'Allah Hafiz',
-      time: '12:09 PM',
-    },
-    {
-      id: 2,
-      name: 'Ahmad',
-      pic: ImageSet.userDummyProfile,
-      lastMessage: 'Ok Talk to you Later',
-      time: 'Today',
-    },
-    {
-      id: 3,
-      name: 'Bilal',
-      pic: ImageSet.userDummyProfile,
-      lastMessage: 'Kia hal hai?',
-      time: 'Yesterday',
-    },
-  ];
+  const [apiData, setApiData] = useState([]);
+
+  useEffect(() => {
+    getConversationsHandler();
+  }, [getConversationsHandler]);
+
+  const getConversationsHandler = async () => {
+    try {
+      const response = await getConversations();
+
+      if (response.data.status === 200) {
+        setApiData(response.data.conversations);
+      } else {
+        console.log('error ============== : ', response.data);
+      }
+    } catch (error) {
+      console.log('error ========== : ', error);
+    }
+  };
 
   const navigateToChat = user => {
     navigation.navigate('chat', {user: user});
@@ -37,9 +34,9 @@ const Conversations = ({navigation}) => {
     <View>
       <Header centeralText={'Chat Room'} />
       <FlatList
-        data={data}
+        data={apiData}
         renderItem={({item}) => <Card item={item} goToChat={navigateToChat} />}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
       />
     </View>
   );

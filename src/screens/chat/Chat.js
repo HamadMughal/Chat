@@ -1,4 +1,5 @@
 import {
+  Alert,
   FlatList,
   Image,
   StyleSheet,
@@ -7,48 +8,70 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../components/Header';
 import Message from '../../components/Message';
 import {Colors} from '../../constents/colors';
 import {ImageSet} from '../../constents/Images';
+import {getChat, sendMessage} from '../../networking/chatServices';
 
 const Chat = ({route, navigation}) => {
   const {user} = route.params;
   const [message, setMessage] = useState('');
-  const messages = [
-    {
-      message: 'kia hal hai?',
-      time: '12:00 PM',
-      isMine: true,
-    },
-    {
-      message: 'Alhamdulillah',
-      time: '12:01 PM',
-      isMine: false,
-    },
-    {
-      message: 'kia hal hai?',
-      time: '12:01 PM',
-      isMine: false,
-    },
-    {
-      message: 'Theek',
-      time: '12:02 PM',
-      isMine: true,
-    },
-    {
-      message: 'Theek',
-      time: '12:02 PM',
-      isMine: true,
-    },
-  ];
+  const [apiData, setApiData] = useState([]);
+
+  useEffect(() => {
+    getChatHandler();
+  }, [getChatHandler]);
+
+  const getChatHandler = async () => {
+    const params = {
+      senderId: '658ee4bcae3b8e6e08e086f9',
+      receiverId: user._id,
+      page: 1,
+      pageSize: 30,
+    };
+    try {
+      const response = await getChat(params);
+      console.log('response============ : ', response.data);
+      if (response.data.status === 200) {
+        setApiData(response.data.messages.reverse());
+      } else {
+        console.log('error ============== : ', response.data);
+      }
+    } catch (error) {
+      console.log('error ============== : ', error);
+    }
+  };
+  const sendMessageHandler = async () => {
+    const params = {
+      senderId: '658ee4bcae3b8e6e08e086f9',
+      receiverId: user._id,
+      message: message,
+    };
+    try {
+      const response = await sendMessage(params);
+      if (response.data.status === 200) {
+        setMessage('');
+        getChatHandler();
+      } else {
+        console.log('error ============== : ', response.data);
+      }
+    } catch (error) {
+      console.log('error ============== : ', error);
+    }
+  };
+
   return (
     <View style={styles.mainContainer}>
-      <Header profilePic={user.pic} name={user.name} navigation={navigation} />
+      <Header
+        profilePic={user.pic}
+        name={user.username}
+        navigation={navigation}
+      />
       <FlatList
         contentContainerStyle={styles.flatListStyle}
-        data={messages}
+        data={apiData}
         renderItem={({item}) => <Message item={item} />}
       />
       <View style={styles.inputContainer}>
@@ -71,7 +94,9 @@ const Chat = ({route, navigation}) => {
             </TouchableOpacity>
           )}
         </View>
-        <TouchableOpacity style={styles.micView}>
+        <TouchableOpacity
+          style={styles.micView}
+          onPress={!message ? null : () => sendMessageHandler()}>
           <Image
             source={message ? ImageSet.send : ImageSet.microphone}
             style={styles.micIconStyle}
