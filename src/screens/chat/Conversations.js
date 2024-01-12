@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {Alert, FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Header from '../../components/Header';
 import {ImageSet} from '../../constents/Images';
@@ -19,6 +19,7 @@ const Conversations = ({navigation}) => {
       if (response.data.status === 200) {
         setApiData(response.data.conversations);
       } else {
+        Alert.alert('message', 'Api fail');
         console.log('error ============== : ', response.data);
       }
     } catch (error) {
@@ -33,11 +34,17 @@ const Conversations = ({navigation}) => {
   return (
     <View>
       <Header centeralText={'Chat Room'} />
-      <FlatList
-        data={apiData}
-        renderItem={({item}) => <Card item={item} goToChat={navigateToChat} />}
-        keyExtractor={item => item._id}
-      />
+      {apiData.length > 0 ? (
+        <FlatList
+          data={apiData}
+          renderItem={({item}) => (
+            <Card item={item} goToChat={navigateToChat} />
+          )}
+          keyExtractor={item => item._id}
+        />
+      ) : (
+        <Text>No data found</Text>
+      )}
     </View>
   );
 };
