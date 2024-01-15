@@ -9,8 +9,11 @@ const Conversations = ({navigation}) => {
   const [apiData, setApiData] = useState([]);
 
   useEffect(() => {
-    getConversationsHandler();
-  }, [getConversationsHandler]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getConversationsHandler();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const getConversationsHandler = async () => {
     try {

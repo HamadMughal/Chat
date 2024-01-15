@@ -33,7 +33,7 @@ const Chat = ({route, navigation}) => {
     };
     try {
       const response = await getChat(params);
-      console.log('response============ : ', response.data);
+      // console.log('response============ : ', response.data);
       if (response.data.status === 200) {
         setApiData(response.data.messages.reverse());
       } else {
