@@ -23,11 +23,11 @@ const Header = props => {
         <>
           <View style={styles.profileView}>
             <TouchableNativeFeedback
-              // onPress={onPressBack}
+              onPress={onPressBack}
               background={TouchableNativeFeedback.Ripple(
                 Colors.gray10,
                 false,
-                30,
+                35,
               )}>
               <View style={styles.backButton}>
                 <Image
@@ -40,26 +40,38 @@ const Header = props => {
                 />
               </View>
             </TouchableNativeFeedback>
-            <TouchableOpacity style={styles.nameView}>
-              <Text style={styles.nameText} numberOfLines={1}>
-                {name}
-              </Text>
-              <Text style={styles.seenText} numberOfLines={1}>
-                Last Seen today at 12:00 PM
-              </Text>
-            </TouchableOpacity>
+            <TouchableNativeFeedback
+              background={TouchableNativeFeedback.Ripple(Colors.gray10, false)}>
+              <View style={styles.nameView}>
+                <Text style={styles.nameText} numberOfLines={1}>
+                  {name}
+                </Text>
+                <Text style={styles.seenText} numberOfLines={1}>
+                  Last Seen today at 12:00 PM
+                </Text>
+              </View>
+            </TouchableNativeFeedback>
           </View>
 
           <View style={styles.actionView}>
-            <TouchableOpacity style={styles.actionButton}>
-              <Image source={ImageSet.video} style={styles.actionIconStyle} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
-              <Image source={ImageSet.call} style={styles.actionIconStyle} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
-              <Image source={ImageSet.more} style={styles.actionIconStyle} />
-            </TouchableOpacity>
+            <TouchableNativeFeedback
+              background={TouchableNativeFeedback.Ripple(Colors.gray10, true)}>
+              <View style={styles.actionButton}>
+                <Image source={ImageSet.video} style={styles.actionIconStyle} />
+              </View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              background={TouchableNativeFeedback.Ripple(Colors.gray10, true)}>
+              <View style={styles.actionButton}>
+                <Image source={ImageSet.call} style={styles.actionIconStyle} />
+              </View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              background={TouchableNativeFeedback.Ripple(Colors.gray10, true)}>
+              <View style={styles.actionButton}>
+                <Image source={ImageSet.more} style={styles.actionIconStyle} />
+              </View>
+            </TouchableNativeFeedback>
           </View>
         </>
       )}
@@ -85,16 +97,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 3,
     position: 'absolute',
-    left: 5,
+    left: 2,
     alignItems: 'center',
     width: '63%',
   },
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 3,
-    // borderRadius: 20,
-    // backgroundColor: 'orange',
+    paddingHorizontal: 5,
+    paddingVertical: 3,
   },
   actionView: {
     flex: 1,
@@ -124,6 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginLeft: 10,
+    padding: 3,
   },
   nameText: {
     color: Colors.white,
