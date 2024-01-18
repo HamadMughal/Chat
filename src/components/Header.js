@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from '../constents/colors';
 import {ImageSet} from '../constents/Images';
@@ -15,16 +22,24 @@ const Header = props => {
       ) : (
         <>
           <View style={styles.profileView}>
-            <TouchableOpacity style={styles.backButton} onPress={onPressBack}>
-              <Image
-                source={ImageSet.backArrow}
-                style={styles.backArrowStyle}
-              />
-              <Image
-                source={profilePic ? profilePic : ImageSet.userDummyProfile}
-                style={styles.profileImageStyle}
-              />
-            </TouchableOpacity>
+            <TouchableNativeFeedback
+              // onPress={onPressBack}
+              background={TouchableNativeFeedback.Ripple(
+                Colors.gray10,
+                false,
+                30,
+              )}>
+              <View style={styles.backButton}>
+                <Image
+                  source={ImageSet.backArrow}
+                  style={styles.backArrowStyle}
+                />
+                <Image
+                  source={profilePic ? profilePic : ImageSet.userDummyProfile}
+                  style={styles.profileImageStyle}
+                />
+              </View>
+            </TouchableNativeFeedback>
             <TouchableOpacity style={styles.nameView}>
               <Text style={styles.nameText} numberOfLines={1}>
                 {name}
@@ -77,6 +92,9 @@ const styles = StyleSheet.create({
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 3,
+    // borderRadius: 20,
+    // backgroundColor: 'orange',
   },
   actionView: {
     flex: 1,

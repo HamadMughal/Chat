@@ -8,6 +8,30 @@ import {getConversations} from '../../networking/chatServices';
 const Conversations = ({navigation}) => {
   const [apiData, setApiData] = useState([]);
 
+  const data = [
+    {
+      id: 1,
+      username: 'Ali',
+      pic: ImageSet.userDummyProfile,
+      lastMessage: 'Allah Hafiz',
+      time: '12:09 PM',
+    },
+    {
+      id: 2,
+      username: 'Ahmad',
+      pic: ImageSet.userDummyProfile,
+      lastMessage: 'Ok Talk to you Later',
+      time: 'Today',
+    },
+    {
+      id: 3,
+      username: 'Bilal',
+      pic: ImageSet.userDummyProfile,
+      lastMessage: 'Kia hal hai?',
+      time: 'Yesterday',
+    },
+  ];
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getConversationsHandler();
@@ -37,13 +61,13 @@ const Conversations = ({navigation}) => {
   return (
     <View>
       <Header centeralText={'Chat Room'} />
-      {apiData.length > 0 ? (
+      {data ? (
         <FlatList
-          data={apiData}
+          data={data}
           renderItem={({item}) => (
             <Card item={item} goToChat={navigateToChat} />
           )}
-          keyExtractor={item => item._id}
+          keyExtractor={item => item.id}
         />
       ) : (
         <Text>No data found</Text>

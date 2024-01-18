@@ -6,14 +6,15 @@ import moment from 'moment';
 const Message = props => {
   const {item} = props;
   return (
-    <TouchableOpacity style={styles.messageContainer}>
+    <TouchableOpacity style={styles.messageContainer} activeOpacity={0.5}>
       <View style={item.isMine ? styles.messageViewV2 : styles.messageView}>
         <Text style={item.isMine ? styles.messageTextV2 : styles.messageText}>
-          {item.text}
+          {item.message}
         </Text>
         <View style={styles.timeView}>
           <Text style={item.isMine ? styles.timeTextV2 : styles.timeText}>
-            {moment(item.createdAt).format('hh:mm')}
+            {/* {moment(item.createdAt).format('hh:mm')} */}
+            {item.time}
           </Text>
         </View>
       </View>
@@ -25,7 +26,6 @@ export default Message;
 
 const styles = StyleSheet.create({
   messageContainer: {
-    // backgroundColor: 'pink',
     marginBottom: 5,
   },
   messageView: {
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     flexDirection: 'row',
-    maxWidth: '70%',
   },
   messageViewV2: {
     backgroundColor: Colors.green,
@@ -42,21 +41,19 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     flexDirection: 'row',
-    maxWidth: '70%',
   },
   messageText: {
     fontSize: 14,
     color: Colors.black,
-    flex: 1,
+    maxWidth: '70%',
   },
   messageTextV2: {
     fontSize: 14,
     color: Colors.white,
-    flex: 1,
+    maxWidth: '70%',
   },
   timeView: {
     marginLeft: 10,
-    // backgroundColor: 'orange',
     justifyContent: 'flex-end',
   },
   timeText: {

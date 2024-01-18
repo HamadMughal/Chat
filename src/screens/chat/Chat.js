@@ -20,9 +20,42 @@ const Chat = ({route, navigation}) => {
   const [message, setMessage] = useState('');
   const [apiData, setApiData] = useState([]);
 
-  useEffect(() => {
-    getChatHandler();
-  }, [getChatHandler]);
+  const messages = [
+    {
+      message: 'kia hal hai?',
+      time: '12:00 PM',
+      isMine: true,
+    },
+    {
+      message: 'Alhamdulillah',
+      time: '12:01 PM',
+      isMine: false,
+    },
+    {
+      message: 'kia hal hai?',
+      time: '12:01 PM',
+      isMine: false,
+    },
+    {
+      message: 'Theek',
+      time: '12:02 PM',
+      isMine: true,
+    },
+    {
+      message: 'Theek',
+      time: '12:02 PM',
+      isMine: true,
+    },
+    {
+      message: '.',
+      time: '12:02 PM',
+      isMine: true,
+    },
+  ];
+
+  // useEffect(() => {
+  //   getChatHandler();
+  // }, [getChatHandler]);
 
   const getChatHandler = async () => {
     const params = {
@@ -71,7 +104,7 @@ const Chat = ({route, navigation}) => {
       />
       <FlatList
         contentContainerStyle={styles.flatListStyle}
-        data={apiData}
+        data={messages}
         renderItem={({item}) => <Message item={item} />}
       />
       <View style={styles.inputContainer}>
@@ -113,6 +146,7 @@ const styles = StyleSheet.create({
   mainContainer: {flex: 1},
   flatListStyle: {
     paddingVertical: 20,
+    paddingHorizontal: 10,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -132,6 +166,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: Colors.lightgray,
     flex: 1,
+    paddingHorizontal: 15,
   },
   micView: {
     backgroundColor: Colors.green,
