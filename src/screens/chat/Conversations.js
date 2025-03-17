@@ -50,7 +50,7 @@ const Conversations = ({navigation}) => {
         console.log('error ============== : ', response.data);
       }
     } catch (error) {
-      console.log('error ========== : ', error);
+      console.log('error  : ', error.message);
     }
   };
 
